@@ -3,12 +3,14 @@ import {Category} from "../model/Category";
 import {TestData} from "../data/TestData";
 import {Task} from "../model/Task";
 import {tsCastToAny} from "@angular/compiler-cli/src/ngtsc/typecheck/src/ts_util";
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataHandlerService {
 
+  taskSubject= new Subject<Task[]>()
   constructor() {
   }
 
@@ -16,13 +18,12 @@ export class DataHandlerService {
     return TestData.categories
   }
 
-  getTask(): Task[] {
-    return TestData.tasks
+  fillTask() {
+    this.taskSubject.next(TestData.tasks)
   }
-  getTaskByCategory(category: Category):Task[]{
+  fillTaskByCategory(category: Category){
     const tasks = TestData.tasks.filter(task => task.category === category)
-    console.log(tasks)
-    return tasks
+    this.taskSubject.next(tasks)
   }
 
 }

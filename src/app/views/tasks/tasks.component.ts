@@ -13,7 +13,7 @@ export class TasksComponent implements  OnInit{
   }
 
   ngOnInit() {
-    this.tasks = this.dateHandler.getTask()
+    this.dateHandler.taskSubject.subscribe(tasks => this.tasks = tasks)
   }
 
 }
