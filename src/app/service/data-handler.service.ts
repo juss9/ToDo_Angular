@@ -3,20 +3,22 @@ import {Category} from "../model/Category";
 import {TestData} from "../data/TestData";
 import {Task} from "../model/Task";
 import {tsCastToAny} from "@angular/compiler-cli/src/ngtsc/typecheck/src/ts_util";
-import {Subject} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataHandlerService {
 
-  taskSubject= new Subject<Task[]>()
+  taskSubject= new BehaviorSubject<Task[]>(TestData.tasks)
+  categoriesSubject = new BehaviorSubject<Category[]>(TestData.categories)
   constructor() {
+    this.fillTask()
   }
 
-  getCategories(): Category[] {
-    return TestData.categories
-  }
+  // getCategories(): Category[] {
+  //   return TestData.categories
+  // }
 
   fillTask() {
     this.taskSubject.next(TestData.tasks)
